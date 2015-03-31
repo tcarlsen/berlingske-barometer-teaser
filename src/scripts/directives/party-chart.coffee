@@ -25,6 +25,10 @@ angular.module "partyChartDirective", []
           render()
           waitForPoll()
 
+          scope.$watch "view", ->
+            svg.selectAll("*").remove()
+            render()
+
       render = ->
         renderColumnView() if scope.view is "percent"
         renderDonutView() if scope.view is "mandates"
