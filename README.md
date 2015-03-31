@@ -1,6 +1,6 @@
 # Berlingske Barometer teaser
 
-![preview]()
+![preview](https://cloud.githubusercontent.com/assets/145288/6920366/2dc69e64-d7be-11e4-8f74-6d0c29ae94f6.png)
 
 ## Contribute
 
