@@ -5,6 +5,8 @@ angular.module "berlingskeBarometerTeaserDirective", []
     link: (scope, element, attr) ->
       currentYear = new Date().getFullYear()
 
+      scope.view = "percent"
+
       getLatestPoll = (year) ->
         pollGetter.get(year, "10.xml").then (data) ->
           if data.error
