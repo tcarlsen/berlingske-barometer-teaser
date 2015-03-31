@@ -25,7 +25,15 @@ angular.module "partyChartDirective", []
           render()
           waitForPoll()
 
+          $window.onresize = -> scope.$apply()
+
           scope.$watch "view", ->
+            svg.selectAll("*").remove()
+            render()
+
+          scope.$watch (->
+            angular.element($window)[0].innerWidth
+          ), ->
             svg.selectAll("*").remove()
             render()
 
