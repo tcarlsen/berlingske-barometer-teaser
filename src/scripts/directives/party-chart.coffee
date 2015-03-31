@@ -27,6 +27,7 @@ angular.module "partyChartDirective", []
 
       render = ->
         renderColumnView() if scope.view is "percent"
+        renderDonutView() if scope.view is "mandates"
 
       renderColumnView = ->
         entries = scope.poll.entries.entry
@@ -77,3 +78,73 @@ angular.module "partyChartDirective", []
           .attr 'width', logoSize
           .attr 'height', logoSize
           .attr "x", (d, i) -> (columnX * i) + logoLeftMargin
+
+      renderDonutView = ->
+        entries = scope.poll.entries.entry
+        entryCount = entries.length
+        svgWidth = svg[0][0].offsetWidth
+        pi = Math.PI
+        frameWidth = svgWidth / 2
+        frameHight = svgHeight
+        logoSize = 15
+        logoMargin = 15
+        donutWidth = 60
+        donutRadius = if frameWidth < frameHight then frameWidth - logoSize else frameHight - logoSize - logoMargin
+        donutInnerRadius = donutRadius - donutWidth
+        arc = d3.svg.arc()
+          .outerRadius donutRadius
+          .innerRadius donutInnerRadius
+        pie = d3.layout.pie()
+          .sort(null)
+          .value (d) -> d.mandates
+          .startAngle -90 * (pi / 180)
+          .endAngle 90 * (pi / 180)
+
+        donut = svg.append "g"
+          .attr "id", "donut"
+          .attr "transform", "translate(#{frameWidth}, #{frameHight})"
+          .data [entries]
+
+        slices = donut.selectAll(".slice").data(pie)
+
+        slices
+          .enter()
+            .append "path"
+              .attr "class", "slice"
+              .attr "fill", (d) -> partyColors[d.data.party.letter]
+
+        slices
+          .transition().duration(1000)
+            .attr "d", arc
+
+        logos = donut.selectAll(".logo").data(pie)
+
+        logos
+          .enter()
+            .append "image"
+            .attr "class", "logo"
+            .attr "xlink:href", (d) ->
+              return "/upload/tcarlsen/berlingske-barometer-teaser/img/#{d.data.party.letter.toLowerCase()}_small@2x.png" if retina
+              return "/upload/tcarlsen/berlingske-barometer-teaser/img/#{d.data.party.letter.toLowerCase()}_small.png"
+            .attr 'width', logoSize
+            .attr 'height', logoSize
+
+        logos
+          .attr "display", (d) ->
+            return "none" if d.data.mandates is "0"
+            return "block"
+          .transition().duration(1000)
+            .attr "x", (d) ->
+              c = arc.centroid(d)
+              x = c[0]
+              y = c[1]
+              h = Math.sqrt(x*x + y*y)
+
+              return ((x / h) * (donutRadius + logoMargin)) - (logoSize / 2)
+            .attr "y", (d) ->
+               c = arc.centroid(d)
+               x = c[0]
+               y = c[1]
+               h = Math.sqrt(x*x + y*y)
+
+               return ((y / h) * (donutRadius + logoMargin)) - (logoSize / 2)
