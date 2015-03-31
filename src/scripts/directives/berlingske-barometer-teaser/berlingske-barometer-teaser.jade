@@ -1,6 +1,8 @@
-nav
-  button(ng-click="view = 'mandates'") VIS MANDATER
-  button(ng-click="view = 'percent'") VIS PROCENTER
+div.btn-group.btn-group-justified
+  div.btn-group
+    button.btn-bbt(ng-class="{active: view=='mandates'}" ng-click="view = 'mandates'") VIS MANDATER
+  div.btn-group
+    button.btn-bbt(ng-class="{active: view=='percent'}" ng-click="view = 'percent'") VIS PROCENTER
 party-chart
-footer
-  p Berlingske Barometer #[a(href="http://www.politiko.dk/barometeret") START]
+div.footer
+  strong Berlingske Barometer #[a.link-bbt(href="http://www.politiko.dk/barometeret") START]

@@ -1,3 +1,75 @@
+$grey: #ccc;
+$light-grey: #eee;
+$dark-grey: #666;
+$orange: #f87016;
+
 berlingske-barometer-teaser {
   display: block;
+
+  .btn-bbt {
+    width: 100%;
+    background-color: $grey;
+    border: 1px solid $grey;
+    color: $dark-grey;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &:focus, &:focus:active {
+      outline: none !important;
+    }
+
+    &.active {
+      background-color: $light-grey;
+    }
+  }
+
+  party-chart {
+    display: block;
+    margin-top: 20px;
+  }
+
+  .footer {
+    background-color: $light-grey;
+    padding: 15px 10px;
+    margin-top: 10px;
+
+    .link-bbt {
+      position: relative;
+      float: right;
+      background-color: $orange;
+      color: #fff;
+      padding: 2px 5px;
+      margin-right: 6px;
+
+      &:hover {
+        opacity: 0.8;
+        text-decoration: none;
+      }
+
+      &:after,
+      &:before {
+      	position: absolute;
+      	left: 100%;
+      	top: 50%;
+      	height: 0;
+      	width: 0;
+      	pointer-events: none;
+      	content: " ";
+      	border: solid transparent;
+      }
+
+      &:after {
+      	border-left-color: $orange;
+      	border-width: 12px;
+      	margin-top: -12px;
+      }
+
+      &:before {
+      	border-width: 18px;
+      	margin-top: -18px;
+      }
+    }
+  }
 }
