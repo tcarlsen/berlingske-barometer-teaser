@@ -1,6 +1,6 @@
 {
   "name": "berlingske-barometer-teaser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "an interactive teaser for berlingske barometer",
   "author": "tcarlsen",
   "devDependencies": {
