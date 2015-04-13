@@ -44,7 +44,7 @@ angular.module "partyChartDirective", []
       renderColumnView = ->
         entries = scope.poll.entries.entry
         entryCount = entries.length
-        svgWidth = svg[0][0].offsetWidth
+        svgWidth = d3.select(element[0])[0][0].offsetWidth
         columnWidth = svgWidth / entryCount
         barMargin = (svgWidth / (entryCount - 1)) * 0.2
         barWidth = columnWidth - barMargin
@@ -94,7 +94,7 @@ angular.module "partyChartDirective", []
       renderDonutView = ->
         entries = scope.poll.entries.entry
         entryCount = entries.length
-        svgWidth = svg[0][0].offsetWidth
+        svgWidth = d3.select(element[0])[0][0].offsetWidth
         pi = Math.PI
         frameWidth = svgWidth / 2
         frameHight = svgHeight
