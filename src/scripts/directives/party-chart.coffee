@@ -92,7 +92,7 @@ angular.module "partyChartDirective", []
           .attr "x", (d, i) -> (columnX * i) + logoLeftMargin
 
       renderDonutView = ->
-        entries = scope.poll.entries.entry
+        entries = scope.poll.blokEntries
         entryCount = entries.length
         svgWidth = d3.select(element[0])[0][0].offsetWidth
         pi = Math.PI
