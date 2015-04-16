@@ -1,5 +1,5 @@
 angular.module "partyChartDirective", []
-  .directive "partyChart", ($window) ->
+  .directive "partyChart", ($window, $filter) ->
     restrict: "E"
     scope: false
     link: (scope, element, attr) ->
@@ -19,6 +19,14 @@ angular.module "partyChartDirective", []
       svg = d3.select(element[0]).append "svg"
         .attr "width", "100%"
         .attr "height", svgHeight
+      tip = d3.tip()
+        .attr "class", "d3-tip"
+        .html (value, suffix) ->
+          value = $filter('number')(value)
+          html = "<p>#{value}#{suffix}</p>"
+
+          return html
+      svg.call tip
 
       waitForPoll = scope.$watch "poll", (newData) ->
         if newData
@@ -75,6 +83,10 @@ angular.module "partyChartDirective", []
             .attr "height", (d) -> barMaxHeight - yScale d.percent
             .attr "y", (d) -> yScale d.percent
 
+        columns
+          .on "mouseover", (d) -> tip.show(d.percent, '%')
+          .on "mouseout", tip.hide
+
         logos = svg.selectAll(".logo").data(entries)
 
         logos
@@ -128,6 +140,10 @@ angular.module "partyChartDirective", []
         slices
           .transition().duration(1000)
             .attr "d", arc
+
+        slices
+          .on "mouseover", (d) -> tip.show(d.data.mandates, '')
+          .on "mouseout", tip.hide
 
         logos = donut.selectAll(".logo").data(pie)
 

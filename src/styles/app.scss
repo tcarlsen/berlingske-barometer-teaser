@@ -73,3 +73,14 @@ berlingske-barometer-teaser {
     }
   }
 }
+
+.d3-tip {
+  padding: 5px 8px;
+  background: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  border-radius: 5px;
+
+  p {
+    margin: 0;
+  }
+}
